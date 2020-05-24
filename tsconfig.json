@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2019",
+    "outDir": "./build",
+    "sourceMap": false,
+    "baseUrl": "."
+  },
+  "typeRoots": [
+    "./node_modules/@types",
+    "./src/types"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
