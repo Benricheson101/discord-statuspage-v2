@@ -14,6 +14,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
   const { pathname, searchParams } = new URL(req.url, 'http://localhost:3000')
   if (searchParams.get('code')) {
     const accessCode: string | string[] = searchParams.get('code')
+
     const data: FormData = new FormData()
 
     data.append('client_id', oauth.CLIENT_ID)

@@ -16,11 +16,7 @@ export async function postUpdate (body: any, db: Database): Promise<{ total: num
     })
       .catch(console.error)
 
-    if (result) {
-      if (result?.status !== 200) console.log(id, result.status)
-      console.log(await result?.json())
-      stats.responses.set(id, result ?? null)
-    }
+    if (result) stats.responses.set(id, result ?? null)
   }
   return stats
 }
@@ -33,11 +29,8 @@ export async function checkWebhooks (db: Database): Promise<{ existing: number, 
     const result: void | Response = await fetch(`https://discord.com/api/webhooks/${id}/${token}`)
       .catch(console.error)
 
-    if (!result) return stats
-
-    if (result?.status === 404 || result?.status === 401) {
+    if (!result || result?.status === 404 || result?.status === 401) {
       db.deleteWebhook(id, token)
-        .then(console.log)
         .catch(console.error)
       stats.deleted++
     } else stats.existing++

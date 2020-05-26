@@ -2,7 +2,7 @@ import { readFile } from 'fs'
 import { IncomingMessage, ServerResponse } from 'http'
 
 export const router = {
-  checkRoute (url: string, req: IncomingMessage, res: ServerResponse) {
+  checkRoute (url: string, _req: IncomingMessage, res: ServerResponse) {
     switch (url) {
       case ('/'): {
         readFile('build/web/pages/index.html', (err: Error, data: Buffer) => {
