@@ -51,7 +51,7 @@ export interface component {
   description: string
   id: string
   page_id: string
-  grup_id: unknown
+  group_id: unknown
 
   [key: string]: any
 }

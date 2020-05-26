@@ -11,7 +11,7 @@ import { setupSuccess } from '../util/Request'
 
 console.log('Server started.')
 createServer(async (req: IncomingMessage, res: ServerResponse) => {
-  const { pathname, searchParams } = new URL(req.url, 'http://localhost:3000')
+  const { pathname, searchParams } = new URL(req.url, oauth.base)
   if (searchParams.get('code')) {
     const accessCode: string | string[] = searchParams.get('code')
 
@@ -63,7 +63,6 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     })
 
     await setupSuccess(initMsg, { webhook })
-  }
-
-  router.checkRoute(pathname, req, res)
+  } else if (searchParams.get('error')) router.checkRoute('/error', req, res)
+  else router.checkRoute(pathname, req, res)
 }).listen(3000)
