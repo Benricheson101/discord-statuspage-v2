@@ -1,3 +1,4 @@
+import './web/server'
 import Statuspage from './Statuspage'
 import Database from './util/Database'
 import { checkWebhooks, postUpdate } from './util/Request'
@@ -10,7 +11,7 @@ const Status = new Statuspage({
   interval: 30000
 })
 
-const db = new Database({
+export const db = new Database({
   connectionURI: 'mongodb://localhost/discord_statuspage',
   name: 'discord_statuspage',
   options: {

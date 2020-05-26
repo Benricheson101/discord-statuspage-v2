@@ -70,7 +70,7 @@ export function getColor (data: StatuspageJSON): number {
   switch (data.incidents[0].status) {
     case 'resolved':
     case 'completed':
-      return 4437377 // red
+      return 4437377 // green
     case 'in_progress':
     case 'monitoring':
       return 15922754 // yellow

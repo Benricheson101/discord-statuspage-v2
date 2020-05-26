@@ -1,4 +1,4 @@
-import { DatabaseWebhook } from '../types'
+import { DatabaseWebhook, IncomingWebhook } from '../types'
 import fetch, { Response } from 'node-fetch'
 import Database from './Database'
 
@@ -43,4 +43,14 @@ export async function checkWebhooks (db: Database): Promise<{ existing: number, 
     } else stats.existing++
   }
   return stats
+}
+
+export async function setupSuccess (body: string, { webhook: { id, token } }: IncomingWebhook): Promise<Response> {
+  return await fetch(`https://discord.com/api/webhooks/${id}/${token}`, {
+    method: 'post',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body
+  })
 }

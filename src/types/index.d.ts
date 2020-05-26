@@ -103,3 +103,16 @@ export interface incident_update {
   incident_update: string
   custom_tweet: any
 }
+
+export interface IncomingWebhook {
+  webhook: {
+    type: number
+    id: string
+    name: string
+    avatar: string
+    channel_id: string
+    guild_id: string
+    token: string
+    url: string
+  }
+}
