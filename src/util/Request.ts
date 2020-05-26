@@ -18,6 +18,7 @@ export async function postUpdate (body: any, db: Database): Promise<{ total: num
 
     if (result) {
       if (result?.status !== 200) console.log(id, result.status)
+      console.log(await result?.json())
       stats.responses.set(id, result ?? null)
     }
   }

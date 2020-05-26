@@ -19,23 +19,25 @@ export async function generateEmbed (data: StatuspageJSON): Promise<string> {
     .then(async (res) => await res?.json()) || { username: 'unknown', discriminator: 'unknown', avatar: 'unknown' }
 
   const title: string = currentIncident.name.length > 256 ? 'Status Page Update' : currentIncident.name
-  const description: string[] = []
+  let description: string
+  const fields: Array<{ name: string, value: string, inline?: boolean }> = []
 
-  if (currentIncident.name.length > 256) description.push(`**${currentIncident.name}}**`)
+  if (currentIncident.name.length > 256) description += `**${currentIncident.name}}**`
 
   if (currentIncident.incident_updates.length) {
-    description.push(
-      `**Status**: ${capitalize(currentIncident.incident_updates[0].status)}`,
-      `**Info**: ${currentIncident.incident_updates[0].body}`
+    fields.push(
+      { name: 'Status', value: capitalize(currentIncident.incident_updates[0].status) },
+      { name: 'Description', value: currentIncident.incident_updates[0].body }
     )
-  } else description.push('No updates have been published.')
+  } else fields.push({ name: 'Description', value: 'No updates have been published.' })
 
   return JSON.stringify({
     embeds: [{
       title: title,
       url: currentIncident.shortlink ?? 'https://status.discordapp.com',
       color: getColor(data),
-      description: description.join('\n'),
+      description,
+      fields,
       timestamp: currentIncident.incident_updates[0].created_at,
       author: {
         name: 'Discord Status',
@@ -50,6 +52,11 @@ export async function generateEmbed (data: StatuspageJSON): Promise<string> {
   })
 }
 
+/**
+ * Capitalize a word
+ * @param {string} word The word to capitalize
+ * @returns {string}
+ */
 export function capitalize (word: string): string {
   return word[0].toUpperCase() + word.slice(1)
 }
@@ -63,14 +70,14 @@ export function getColor (data: StatuspageJSON): number {
   switch (data.incidents[0].status) {
     case 'resolved':
     case 'completed':
-      return 2096947 // green
+      return 4437377 // red
     case 'in_progress':
     case 'monitoring':
       return 15922754 // yellow
     case 'investingating':
       return 15571250 // orange
     case 'identified':
-      return 15544882 // red
+      return 15816754 // red
     default:
       return 4360181 // light blue
   }
