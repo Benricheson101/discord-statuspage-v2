@@ -63,6 +63,8 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
     })
 
     await setupSuccess(initMsg, { webhook })
-  } else if (searchParams.get('error')) router.checkRoute('/error', req, res)
+  }
+
+  if (searchParams.get('error')) router.checkRoute('/error', req, res)
   else router.checkRoute(pathname, req, res)
 }).listen(3000)
