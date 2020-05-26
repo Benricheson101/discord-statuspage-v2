@@ -4,15 +4,16 @@ import Database from './util/Database'
 import { checkWebhooks, postUpdate } from './util/Request'
 import { generateEmbed } from './util/util'
 import { promisify } from 'util'
+import { database, ops } from './config'
 
-const Status = new Statuspage({
-  url: 'https://status.discordapp.com/index.json',
+const status = new Statuspage({
+  url: ops.statuspage,
   file: './build/data.json',
   interval: 30000
 })
 
 export const db = new Database({
-  connectionURI: 'mongodb://localhost/discord_statuspage',
+  connectionURI: database,
   name: 'discord_statuspage',
   options: {
     useNewUrlParser: true,
@@ -20,7 +21,7 @@ export const db = new Database({
   }
 })
 
-Status.on('start', () => {
+status.on('start', () => {
   console.log('Started')
 
   db.connect()
@@ -32,9 +33,7 @@ Status.on('start', () => {
     })
 })
 
-Status.on('run', console.log)
-
-Status.on('update', async (data) => {
+status.on('update', async (data) => {
   if (!db.connected) await promisify(setTimeout)(2000)
 
   const body = await generateEmbed(data)
@@ -43,4 +42,4 @@ Status.on('update', async (data) => {
     .catch(console.error)
 })
 
-Status.run()
+status.run()
