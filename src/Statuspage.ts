@@ -14,6 +14,8 @@ export default class extends EventEmitter {
 
   constructor (private readonly options: BaseOptions) {
     super()
+    this.options.file = this.options.file ?? this.defaults.path
+    this.options.interval = this.options.interval ?? this.defaults.interval
   }
 
   /**
@@ -47,7 +49,7 @@ export default class extends EventEmitter {
    * Read locally saved data
    */
   async read (): Promise<string> {
-    const localData = await promises.readFile(this.options.file ?? this.defaults.path, 'utf-8')
+    const localData = await promises.readFile(this.options.file, 'utf-8')
     this.local = JSON.parse(localData)
     return localData
   }
@@ -56,6 +58,11 @@ export default class extends EventEmitter {
    * Run at a specified interval
    */
   run (): void {
+    promises.stat(this.options.file)
+      .catch(async (err) => {
+        if (err.code === 'ENOENT') await promises.writeFile(this.options.file, '{}')
+      })
+
     this.emit('start', { startedAt: new Date() })
 
     const run = async (): Promise<void> => {
@@ -70,7 +77,7 @@ export default class extends EventEmitter {
     }
 
     run()
-    setInterval(run, this.options.interval ?? this.defaults.interval)
+    setInterval(run, this.options.interval)
   }
 
   /**
@@ -82,6 +89,7 @@ export default class extends EventEmitter {
       return
     }
     this.local = this.remote
-    return await promises.writeFile(this.options.file ?? this.defaults.path, JSON.stringify(this.remote, null, 2))
+
+    return await promises.writeFile(this.options.file, JSON.stringify(this.remote, null, 2))
   }
 }
