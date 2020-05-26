@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "tsc -p tsconfig.json && copyfiles -u 1 \"src/**/*.html\" build",
     "dev": "nodemon --exec 'yarn tsc -p tsconfig.json && yarn html && node build/index.js' --ignore build/ --ext ts",
     "html": "copyfiles -u 1 \"src/**/*.html\" build"
   },
