@@ -8,6 +8,7 @@ export const ops = {
 }
 
 export const oauth = {
+  base: 'redirect base url',
   CLIENT_ID: 'client id',
   CLIENT_SECRET: 'client secret',
   REDIRECT: 'redirect',
