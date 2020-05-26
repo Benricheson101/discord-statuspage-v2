@@ -28,7 +28,7 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
       method: 'POST',
       body: data
     })
-      .then((res: any) => res.json())
+      .then(async (res) => await res.json())
       .catch((err: Error) => {
         router.checkRoute('/error', req, res)
         console.error(err)
