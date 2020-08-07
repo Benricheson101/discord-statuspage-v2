@@ -31,7 +31,7 @@ export default class extends EventEmitter {
       return
     }
     if (!Object.keys(this.local).includes('components')) this.write()
-    return this.local.incidents[0].incident_updates[0].updated_at !== this.remote.incidents[0].incident_updates[0].updated_at
+    return Object.keys(this.local).includes('incidents') && Object.keys(this.remote).includes('incidents') && this.local.incidents[0].incident_updates[0].updated_at !== this.remote.incidents[0].incident_updates[0].updated_at
   }
 
   /**
