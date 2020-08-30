@@ -41,7 +41,7 @@ export function generateEmbed (data: StatuspageJSON): string {
       author: {
         name: 'Discord Status',
         icon_url: 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png',
-        url: ops?.setupUrl ?? 'https://status.discordapp.com'
+        url: ops?.supportServer ?? 'https://status.discordapp.com'
       },
       footer: {
         text: `Started: ${moment(currentIncident.started_at).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss')} (PDT) | Updated:`
