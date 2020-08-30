@@ -14,7 +14,7 @@ export default class Database {
   }
 
   async deleteWebhook (id: string, token: string): Promise<DeleteWriteOpResultObject> {
-    return await this.db.collection('webhooks').deleteOne({ id: id, token: token })
+    return await this.db.collection('webhooks').deleteOne({ id, token })
   }
 
   async getWebhooks (): Promise<DatabaseWebhook[]> {
