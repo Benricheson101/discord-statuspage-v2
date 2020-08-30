@@ -45,7 +45,7 @@ status.on('start', () => console.log('Started'))
 status.on('update', async (data) => {
   if (!db.connected) await promisify(setTimeout)(2000)
 
-  const body = await generateEmbed(data)
+  const body = generateEmbed(data)
 
   postUpdate(body, db)
     .catch(console.error)

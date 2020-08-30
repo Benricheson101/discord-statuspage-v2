@@ -1,5 +1,4 @@
 import { ops } from '../config'
-import fetch from 'node-fetch'
 import { StatuspageJSON } from '../types'
 import moment = require('moment')
 
@@ -8,15 +7,15 @@ import moment = require('moment')
  * @param {StatuspageJSON} data - The statuspage data
  * @returns {Promise<string>}
  */
-export async function generateEmbed (data: StatuspageJSON): Promise<string> {
+export function generateEmbed (data: StatuspageJSON): string {
   const currentIncident = data.incidents[0]
 
-  const author: { username: string, discriminator: number, avatar: string } = await fetch(`https://discordapp.com/api/users/${ops.devId}`, {
-    headers: {
-      authorization: `Bot ${ops.token}`
-    }
-  })
-    .then(async (res) => await res?.json()) || { username: 'unknown', discriminator: 'unknown', avatar: 'unknown' }
+  // const author: { username: string, discriminator: number, avatar: string } = await fetch(`https://discordapp.com/api/users/${ops.devId}`, {
+  //   headers: {
+  //     authorization: `Bot ${ops.token}`
+  //   }
+  // })
+  //   .then(async (res) => await res?.json()) || { username: 'unknown', discriminator: 'unknown', avatar: 'unknown' }
 
   const title: string = currentIncident.name.length > 256 ? 'Status Page Update' : currentIncident.name
   let description: string
@@ -45,8 +44,9 @@ export async function generateEmbed (data: StatuspageJSON): Promise<string> {
         url: ops?.setupUrl ?? 'https://status.discordapp.com'
       },
       footer: {
-        text: `Made by: ${author.username}#${author.discriminator} | Started: ${moment(currentIncident.started_at).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss')} (PDT) | Updated:`,
-        icon_url: `https://cdn.discordapp.com/avatars/${ops.devId}/${author.avatar}.png`
+        text: `Started: ${moment(currentIncident.started_at).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss')} (PDT) | Updated:`
+        // text: `Made by: ${author.username}#${author.discriminator} | Started: ${moment(currentIncident.started_at).subtract(3, 'hours').format('YYYY-MM-DD HH:mm:ss')} (PDT) | Updated:`,
+        // icon_url: `https://cdn.discordapp.com/avatars/${ops.devId}/${author.avatar}.png`
       }
     }]
   })
