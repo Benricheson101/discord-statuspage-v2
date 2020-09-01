@@ -74,7 +74,7 @@ export function getColor (data: StatuspageJSON): number {
     case 'in_progress':
     case 'monitoring':
       return 15922754 // yellow
-    case 'investingating':
+    case 'investigating':
       return 15571250 // orange
     case 'identified':
       return 15816754 // red

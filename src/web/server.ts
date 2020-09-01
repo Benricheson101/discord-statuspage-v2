@@ -49,15 +49,15 @@ createServer(async (req: IncomingMessage, res: ServerResponse) => {
 
     const initMsg = JSON.stringify({
       embeds: [{
-        description: 'Subscribed to [Discord Status Page](https://status.discord.com/) updates!',
+        description: 'Subscribed to [Discord Status](https://status.discord.com/) updates!',
         color: 4437377,
         author: {
           name: 'Discord Status',
           icon_url: 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png',
-          url: ops?.setupUrl ?? 'https://status.discordapp.com'
+          url: ops?.supportServer ?? 'https://status.discordapp.com'
         },
         footer: {
-          text: 'To unsubscribe, delete this webhook in Server Setting > Webhooks > Discord Status Page'
+          text: 'To unsubscribe, delete this webhook in Server Settings > Integrations > Webhooks > Discord Status'
         }
       }]
     })
