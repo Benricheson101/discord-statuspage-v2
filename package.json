@@ -29,6 +29,6 @@
     "formdata": "^0.10.4",
     "moment": "^2.26.0",
     "mongodb": "^3.5.7",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   }
 }
